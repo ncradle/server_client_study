@@ -30,7 +30,7 @@ int main()
   socklen_t len = sizeof(client_addr);
   int client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &len);
 
-  // send
+  // write
   write(client_socket, "Hello", 5);
 
   // close client connection
