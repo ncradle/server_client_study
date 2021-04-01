@@ -5,3 +5,4 @@ project(socket)
 
 # add the executable
 add_subdirectory(client)
+add_subdirectory(server)
