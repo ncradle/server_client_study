@@ -11,6 +11,8 @@ int main()
   // SOCK_STREAM : tcp
   int server_socket = socket(AF_INET, SOCK_STREAM, 0);
 
+  int yes = 1;
+  err = setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
   // 2:bind
   // The socket is bound to a local address using bind
   // so that other sockets may be "connect"ed to it.
