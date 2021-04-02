@@ -30,9 +30,11 @@ int main()
   char buf[10] = {};
   int read_num = 0;
   read_num = read(client_socket, buf, 10);
-  int(read_num < 0){
-      perror("read")} std::cout
-      << buf << std::endl;
+  if (read_num < 0)
+  {
+    perror("read");
+  }
+  std::cout << buf << std::endl;
 
   err = close(client_socket);
   if (err < 0)
