@@ -2,14 +2,16 @@
 
 int main()
 {
-  const uint16_t SERVER_PORT = 12345;
-  const int MAX_CLIENT = 5;
+  const uint16_t SERVER_PORT = 12345; // server port num
+  const int MAX_CLIENT = 5;           // client queue for listen
   int err = 0;
 
   // 1:socket
   // A socket is created with socket
-  // AF_INET     : ipv4
-  // SOCK_STREAM : tcp
+  // socket_family = AF_INET     : ipv4
+  // socket_type   = SOCK_STREAM : tcp
+  // protocol = 0 / IPPROTO_TCP? : it is default
+  // ToDo : serching IPPROTO_TCP
   int server_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (server_socket < 0)
   {
@@ -17,7 +19,10 @@ int main()
     return -1;
   }
 
-  int yes = 1;
+  // this option command
+  // enable to re-bind same port before release from WAIT_TIME
+  // "yes" must be int type
+  const int yes = 1;
   err = setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
   if (err < 0)
   {
