@@ -1,24 +1,24 @@
 #include "server.h"
 
-int main()
-{
-  const uint16_t SERVER_PORT = 12345; // server port num
-  const int MAX_CLIENT = 5;           // client queue for listen
-  int err = 0;
+Server::Server() : server_socket{0}, client_socket{0} {}
 
-  // 1:socket
+Server::~Server() {}
+
+int Server::Init()
+{ // 1:socket
   // A socket is created with socket
-  // socket_family = AF_INET     : ipv4
-  // socket_type   = SOCK_STREAM : tcp
-  // protocol = 0 / IPPROTO_TCP? : it is default
+  // socket_family = AF_INET          : ipv4
+  // socket_type   = SOCK_STREAM      : tcp
+  // protocol      = 0 / IPPROTO_TCP? : it is default
   // ToDo : serching IPPROTO_TCP
-  int server_socket = socket(AF_INET, SOCK_STREAM, 0);
+  server_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (server_socket < 0)
   {
     perror("socket");
     return -1;
   }
 
+  int err;
   // this option command
   // enable to re-bind same port before release from WAIT_TIME
   // "yes" must be int type
@@ -55,10 +55,14 @@ int main()
     return -1;
   }
 
-  // 4:accept
+  return 0;
+}
+
+int Server::Main()
+{ // 4:accept
   struct sockaddr_in client_addr;
   socklen_t len = sizeof(client_addr);
-  int client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &len);
+  client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &len);
   if (client_socket < 0)
   {
     perror("accept");
@@ -74,6 +78,7 @@ int main()
     return -1;
   }
 
+  int err;
   // close client connection
   err = close(client_socket);
   if (err < 0)
