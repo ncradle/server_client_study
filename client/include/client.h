@@ -8,4 +8,19 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+const uint16_t SERVER_PORT = 12345;
+const char LOACLHOST[] = "127.0.0.1";
+
+class Client
+{
+public:
+  Client();
+  ~Client();
+  int Init();
+  int Main();
+
+private:
+  int client_socket;
+};
+
 #endif
