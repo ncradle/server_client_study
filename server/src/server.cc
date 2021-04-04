@@ -33,6 +33,9 @@ int Server::Init()
   // 2:bind
   // The socket is bound to a local address using bind
   // so that other sockets may be "connect"ed to it.
+  // sin_family      = AF_INET              : ipv4
+  // sin_addr.s_addr = inet_addr(LOACLHOST) : ip address
+  // sin_port        = htons(SERVER_PORT)   : port
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(SERVER_PORT);
