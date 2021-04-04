@@ -7,6 +7,11 @@ Client::~Client() {}
 int Client::Init()
 {
   // 1:socket
+  // A socket is created with socket
+  // socket_family = AF_INET          : ipv4
+  // socket_type   = SOCK_STREAM      : tcp
+  // protocol      = 0 / IPPROTO_TCP? : it is default
+  // ToDo : serching IPPROTO_TCP
   client_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (client_socket < 0)
   {
@@ -19,6 +24,10 @@ int Client::Init()
 int Client::Main()
 {
   // 2:connect
+  // connect server socket
+  // sin_family      = AF_INET              : ipv4
+  // sin_addr.s_addr = inet_addr(LOACLHOST) : ip address
+  // sin_port        = htons(SERVER_PORT)   : port
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = inet_addr(LOACLHOST);
@@ -30,6 +39,7 @@ int Client::Main()
     perror("connect");
     return -1;
   }
+
   // read
   char buf[10] = {};
   int read_num = 0;
