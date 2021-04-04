@@ -31,7 +31,7 @@ int Client::Main()
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = inet_addr(LOACLHOST);
-  server_addr.sin_port = htons(SERVER_PORT);
+  server_addr.sin_port = htons(CONNECT_PORT);
   int err = 0;
   err = connect(client_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (err < 0)

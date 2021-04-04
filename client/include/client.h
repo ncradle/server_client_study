@@ -8,7 +8,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-const uint16_t SERVER_PORT = 12345;   // connect port
+const uint16_t CONNECT_PORT = 12345;  // server port
 const char LOACLHOST[] = "127.0.0.1"; // local connection
 
 class Client
