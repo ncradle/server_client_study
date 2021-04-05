@@ -76,7 +76,7 @@ int Server::Main()
   {
     // write
     int write_num = 0;
-    write_num = write(client_socket_, "Hello", sizeof("Hello"));
+    write_num = write(client_socket_, "123456", 6);
     if (write_num < 0)
     {
       perror("write");
