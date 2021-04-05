@@ -21,8 +21,8 @@ public:
   void Stop();
 
 private:
-  int client_socket;
-  bool isRunning;
+  int client_socket_;
+  bool isRunning_;
 };
 
 #endif

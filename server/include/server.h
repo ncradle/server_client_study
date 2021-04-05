@@ -20,9 +20,9 @@ public:
   void Stop();
 
 private:
-  int server_socket;
-  int client_socket;
-  bool isRunning;
+  int server_socket_;
+  int client_socket_;
+  bool isRunning_;
 };
 
 #endif

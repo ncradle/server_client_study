@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server() : server_socket{0}, client_socket{0}, isRunning{true} {}
+Server::Server() : server_socket_{0}, client_socket_{0}, isRunning_{true} {}
 
 Server::~Server() {}
 
@@ -11,8 +11,8 @@ int Server::Init()
   // socket_type   = SOCK_STREAM      : tcp
   // protocol      = 0 / IPPROTO_TCP? : it is default
   // ToDo : serching IPPROTO_TCP
-  server_socket = socket(AF_INET, SOCK_STREAM, 0);
-  if (server_socket < 0)
+  server_socket_ = socket(AF_INET, SOCK_STREAM, 0);
+  if (server_socket_ < 0)
   {
     perror("socket");
     return -1;
@@ -23,7 +23,7 @@ int Server::Init()
   // enable to re-bind same port before release from WAIT_TIME
   // "yes" must be int type
   const int yes = 1;
-  err = setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
+  err = setsockopt(server_socket_, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
   if (err < 0)
   {
     perror("socket option");
@@ -40,7 +40,7 @@ int Server::Init()
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(SERVER_PORT);
   server_addr.sin_addr.s_addr = INADDR_ANY;
-  err = bind(server_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
+  err = bind(server_socket_, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (err < 0)
   {
     std::cout << errno << std::endl;
@@ -51,7 +51,7 @@ int Server::Init()
   // 3:listen
   // A willingness to accept incoming connections and
   // a queue limit for incoming connections are specified with listen
-  err = listen(server_socket, MAX_CLIENT);
+  err = listen(server_socket_, MAX_CLIENT);
   if (err < 0)
   {
     perror("listen");
@@ -65,18 +65,18 @@ int Server::Main()
 { // 4:accept
   struct sockaddr_in client_addr;
   socklen_t len = sizeof(client_addr);
-  client_socket = accept(server_socket, (struct sockaddr *)&client_addr, &len);
-  if (client_socket < 0)
+  client_socket_ = accept(server_socket_, (struct sockaddr *)&client_addr, &len);
+  if (client_socket_ < 0)
   {
     perror("accept");
     return -1;
   }
 
-  while (isRunning)
+  while (isRunning_)
   {
     // write
     int write_num = 0;
-    write_num = write(client_socket, "Hello", sizeof("Hello"));
+    write_num = write(client_socket_, "Hello", sizeof("Hello"));
     if (write_num < 0)
     {
       perror("write");
@@ -86,7 +86,7 @@ int Server::Main()
 
   int err;
   // close client connection
-  err = close(client_socket);
+  err = close(client_socket_);
   if (err < 0)
   {
     perror("close client");
@@ -94,7 +94,7 @@ int Server::Main()
   }
 
   // close listen
-  err = close(server_socket);
+  err = close(server_socket_);
   if (err < 0)
   {
     perror("close server");
@@ -106,5 +106,5 @@ int Server::Main()
 
 void Server::Stop()
 {
-  isRunning = false;
+  isRunning_ = false;
 }

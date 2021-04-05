@@ -1,6 +1,6 @@
 #include "client.h"
 
-Client::Client() : client_socket{0}, isRunning{true} {}
+Client::Client() : client_socket_{0}, isRunning_{true} {}
 
 Client::~Client() {}
 
@@ -12,8 +12,8 @@ int Client::Init()
   // socket_type   = SOCK_STREAM      : tcp
   // protocol      = 0 / IPPROTO_TCP? : it is default
   // ToDo : serching IPPROTO_TCP
-  client_socket = socket(AF_INET, SOCK_STREAM, 0);
-  if (client_socket < 0)
+  client_socket_ = socket(AF_INET, SOCK_STREAM, 0);
+  if (client_socket_ < 0)
   {
     perror("socket");
     return -1;
@@ -33,19 +33,19 @@ int Client::Main()
   server_addr.sin_addr.s_addr = inet_addr(LOACLHOST);
   server_addr.sin_port = htons(CONNECT_PORT);
   int err = 0;
-  err = connect(client_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
+  err = connect(client_socket_, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (err < 0)
   {
     perror("connect");
     return -1;
   }
 
-  while (isRunning)
+  while (isRunning_)
   {
     // read
     char buf[10] = {};
     int read_num = 0;
-    read_num = read(client_socket, buf, 10);
+    read_num = read(client_socket_, buf, 10);
     if (read_num < 0)
     {
       perror("read");
@@ -53,7 +53,7 @@ int Client::Main()
     std::cout << buf << std::endl;
   }
 
-  err = close(client_socket);
+  err = close(client_socket_);
   if (err < 0)
   {
     perror("close client");
@@ -64,5 +64,5 @@ int Client::Main()
 
 void Client::Stop()
 {
-  isRunning = false;
+  isRunning_ = false;
 }
