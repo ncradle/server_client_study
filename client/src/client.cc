@@ -1,6 +1,6 @@
 #include "client.h"
 
-Client::Client() : client_socket{0} {}
+Client::Client() : client_socket{0}, isRunning{true} {}
 
 Client::~Client() {}
 
@@ -40,15 +40,18 @@ int Client::Main()
     return -1;
   }
 
-  // read
-  char buf[10] = {};
-  int read_num = 0;
-  read_num = read(client_socket, buf, 10);
-  if (read_num < 0)
+  while (isRunning)
   {
-    perror("read");
+    // read
+    char buf[10] = {};
+    int read_num = 0;
+    read_num = read(client_socket, buf, 10);
+    if (read_num < 0)
+    {
+      perror("read");
+    }
+    std::cout << buf << std::endl;
   }
-  std::cout << buf << std::endl;
 
   err = close(client_socket);
   if (err < 0)
@@ -57,4 +60,9 @@ int Client::Main()
     return -1;
   }
   return 0;
+}
+
+void Client::Stop()
+{
+  isRunning = false;
 }

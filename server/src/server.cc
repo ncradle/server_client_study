@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server() : server_socket{0}, client_socket{0} {}
+Server::Server() : server_socket{0}, client_socket{0}, isRunning{true} {}
 
 Server::~Server() {}
 
@@ -72,13 +72,16 @@ int Server::Main()
     return -1;
   }
 
-  // write
-  int write_num = 0;
-  write_num = write(client_socket, "Hello", sizeof("Hello"));
-  if (write_num < 0)
+  while (isRunning)
   {
-    perror("write");
-    return -1;
+    // write
+    int write_num = 0;
+    write_num = write(client_socket, "Hello", sizeof("Hello"));
+    if (write_num < 0)
+    {
+      perror("write");
+      return -1;
+    }
   }
 
   int err;
@@ -99,4 +102,9 @@ int Server::Main()
   }
 
   return 0;
+}
+
+void Server::Stop()
+{
+  isRunning = false;
 }

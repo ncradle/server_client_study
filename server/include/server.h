@@ -17,10 +17,12 @@ public:
   ~Server();
   int Init();
   int Main();
+  void Stop();
 
 private:
   int server_socket;
   int client_socket;
+  bool isRunning;
 };
 
 #endif

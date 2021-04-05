@@ -18,9 +18,11 @@ public:
   ~Client();
   int Init();
   int Main();
+  void Stop();
 
 private:
   int client_socket;
+  bool isRunning;
 };
 
 #endif

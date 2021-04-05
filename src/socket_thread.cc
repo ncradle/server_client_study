@@ -11,10 +11,10 @@ int main()
   std::thread th0([&server] { server.Main(); });
   std::thread th1([&client] { client.Main(); });
 
-  th0.detach();
-  th1.detach();
-  unsigned int i, j;
-  for (i = 0; i < 0xffffffff; i++)
-  {
-  }
+  std::this_thread::sleep_for(std::chrono::microseconds(1000));
+
+  server.Stop();
+  client.Stop();
+  th0.join();
+  th1.join();
 }
