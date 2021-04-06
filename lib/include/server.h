@@ -7,13 +7,12 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
-const uint16_t SERVER_PORT = 12345; // server port num
-const int MAX_CLIENT = 5;           // client queue for
+const int MAX_CLIENT = 5; // client queue for
 
 class Server
 {
 public:
-  Server();
+  Server(uint16_t server_port);
   ~Server();
   int Init();
   int Main();
@@ -21,6 +20,7 @@ public:
 
 private:
   int server_socket_;
+  uint16_t server_port_;
   int client_socket_;
   bool isRunning_;
 };

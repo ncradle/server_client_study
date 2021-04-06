@@ -1,6 +1,6 @@
 #include "client.h"
 
-Client::Client() : client_socket_{0}, isRunning_{true} {}
+Client::Client(uint16_t server_port) : client_socket_{0}, server_port_{server_port}, isRunning_{true} {}
 
 Client::~Client() {}
 
@@ -31,7 +31,7 @@ int Client::Main()
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = inet_addr(LOACLHOST);
-  server_addr.sin_port = htons(CONNECT_PORT);
+  server_addr.sin_port = htons(server_port_);
   int err = 0;
   err = connect(client_socket_, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (err < 0)

@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server() : server_socket_{0}, client_socket_{0}, isRunning_{true} {}
+Server::Server(uint16_t server_port) : server_socket_{0}, server_port_{server_port}, client_socket_{0}, isRunning_{true} {}
 
 Server::~Server() {}
 
@@ -38,7 +38,7 @@ int Server::Init()
   // sin_port        = htons(SERVER_PORT)   : port
   struct sockaddr_in server_addr;
   server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons(SERVER_PORT);
+  server_addr.sin_port = htons(server_port_);
   server_addr.sin_addr.s_addr = INADDR_ANY;
   err = bind(server_socket_, (struct sockaddr *)&server_addr, sizeof(server_addr));
   if (err < 0)

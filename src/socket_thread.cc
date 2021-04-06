@@ -4,8 +4,9 @@
 
 int main()
 {
-  Server server;
-  Client client;
+  const uint16_t SERVER_PORT = 12345;
+  Server server(SERVER_PORT);
+  Client client(SERVER_PORT);
   server.Init();
   client.Init();
   std::thread th0([&server] { server.Main(); });
