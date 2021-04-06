@@ -1,6 +1,3 @@
 cmake_minimum_required(VERSION 3.2)
 add_library(tcp_client STATIC client.cc)
 target_include_directories(tcp_client PRIVATE ../include)
-add_executable(main_client main.cc)
-target_link_libraries(main_client PRIVATE tcp_client)
-target_include_directories(main_client PRIVATE ../include)
