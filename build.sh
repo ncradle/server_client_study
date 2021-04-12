@@ -1,4 +1,4 @@
 cd build
-cmake ..
+cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
 cmake --build .
 cd ../
