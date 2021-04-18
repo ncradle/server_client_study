@@ -75,6 +75,22 @@ int Client::Main()
   return 0;
 }
 
+void Client::Send(const char *msg, const size_t size)
+{
+  // write
+  size_t offset = 0;
+  while (offset < size)
+  {
+    ssize_t write_num = send(client_socket_, msg + offset, size - offset, SEND_FLAG);
+    if (write_num < 0)
+    {
+      perror("write");
+      break;
+    }
+    offset += static_cast<size_t>(write_num);
+  }
+}
+
 void Client::Stop()
 {
   isRunning_ = false;

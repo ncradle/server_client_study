@@ -18,6 +18,7 @@ public:
   int Init();
   int Main();
   void Stop();
+  void Send(const char *msg, size_t size);
 
 private:
   int server_socket_;

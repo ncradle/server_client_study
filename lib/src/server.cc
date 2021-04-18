@@ -87,12 +87,7 @@ int Server::Main()
   {
     // write
     int write_num = 0;
-    write_num = send(client_socket_, "123456", 6, SEND_FLAG);
-    if (write_num < 0)
-    {
-      perror("write");
-      return -1;
-    }
+    Send("123456", 6);
   }
 
   int err;
@@ -115,6 +110,22 @@ int Server::Main()
   }
 
   return 0;
+}
+
+void Server::Send(const char *msg, const size_t size)
+{
+  // write
+  size_t offset = 0;
+  while (offset < size)
+  {
+    ssize_t write_num = send(client_socket_, msg + offset, size - offset, SEND_FLAG);
+    if (write_num < 0)
+    {
+      perror("write");
+      break;
+    }
+    offset += static_cast<size_t>(write_num);
+  }
 }
 
 void Server::Stop()
