@@ -12,6 +12,16 @@
       "problemMatcher": []
     },
     {
+      "label": "debug",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "debug.sh"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
       "label": "clean",
       "type": "shell",
       "command": "bash",
