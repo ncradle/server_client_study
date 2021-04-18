@@ -10,3 +10,5 @@ target_include_directories(socket_thread PRIVATE ../lib/include)
 find_package(Threads REQUIRED)
 target_link_libraries(socket_thread PRIVATE Threads::Threads)
 target_link_libraries(socket_thread PRIVATE tcp_lib)
+
+target_compile_options(socket_thread PRIVATE $<$<CXX_COMPILER_ID:GNU>:-Wall>)
