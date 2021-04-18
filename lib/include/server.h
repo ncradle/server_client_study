@@ -25,6 +25,7 @@ private:
   uint16_t server_port_;
   int client_socket_;
   bool isRunning_;
+  bool isConnect_;
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server(uint16_t server_port) : server_socket_{INVALID_SOCKET}, server_port_{server_port}, client_socket_{INVALID_SOCKET}, isRunning_{false} {}
+Server::Server(uint16_t server_port) : server_socket_{INVALID_SOCKET}, server_port_{server_port}, client_socket_{INVALID_SOCKET}, isRunning_{false}, isConnect_{false} {}
 
 Server::~Server()
 {
@@ -86,7 +86,7 @@ int Server::Recv()
       perror("accept");
       return -1;
     }
-
+    isConnect_ = true;
 
     while (isRunning_)
     { // read
@@ -101,6 +101,8 @@ int Server::Recv()
       if (read_num < 0)
       {
         perror("read");
+        isConnect_ = false;
+        break;
       }
       std::cout << "server " << buf << std::endl;
     }
@@ -130,6 +132,10 @@ int Server::Recv()
 
 void Server::Send(const char *msg, const size_t size)
 {
+  if (!isConnect_)
+  {
+    return;
+  }
   size_t offset = 0;
   while (offset < size)
   {
