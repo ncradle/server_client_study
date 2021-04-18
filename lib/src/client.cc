@@ -33,7 +33,7 @@ int Client::Main()
   server_addr.sin_addr.s_addr = inet_addr(LOACLHOST);
   server_addr.sin_port = htons(server_port_);
   int err = 0;
-  err = connect(client_socket_, (struct sockaddr *)&server_addr, sizeof(server_addr));
+  err = connect(client_socket_, reinterpret_cast<struct sockaddr *>(&server_addr), sizeof(server_addr));
   if (err < 0)
   {
     perror("connect");

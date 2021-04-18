@@ -40,7 +40,7 @@ int Server::Init()
   server_addr.sin_family = AF_INET;
   server_addr.sin_port = htons(server_port_);
   server_addr.sin_addr.s_addr = INADDR_ANY;
-  err = bind(server_socket_, (struct sockaddr *)&server_addr, sizeof(server_addr));
+  err = bind(server_socket_, reinterpret_cast<struct sockaddr *>(&server_addr), sizeof(server_addr));
   if (err < 0)
   {
     std::cout << errno << std::endl;
@@ -65,7 +65,7 @@ int Server::Main()
 { // 4:accept
   struct sockaddr_in client_addr;
   socklen_t len = sizeof(client_addr);
-  client_socket_ = accept(server_socket_, (struct sockaddr *)&client_addr, &len);
+  client_socket_ = accept(server_socket_, reinterpret_cast<struct sockaddr *>(&client_addr), &len);
   if (client_socket_ < 0)
   {
     perror("accept");
