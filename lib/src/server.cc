@@ -1,6 +1,6 @@
 #include "server.h"
 
-Server::Server(uint16_t server_port) : server_socket_{INVALID_SOCKET}, server_port_{server_port}, client_socket_{INVALID_SOCKET}, isRunning_{true} {}
+Server::Server(uint16_t server_port) : server_socket_{INVALID_SOCKET}, server_port_{server_port}, client_socket_{INVALID_SOCKET}, isRunning_{false} {}
 
 Server::~Server()
 {
@@ -81,6 +81,7 @@ int Server::Main()
     perror("accept");
     return -1;
   }
+  isRunning_ = true;
 
   while (isRunning_)
   {

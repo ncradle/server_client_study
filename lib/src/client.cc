@@ -1,6 +1,6 @@
 #include "client.h"
 
-Client::Client(uint16_t server_port) : client_socket_{INVALID_SOCKET}, server_port_{server_port}, isRunning_{true} {}
+Client::Client(uint16_t server_port) : client_socket_{INVALID_SOCKET}, server_port_{server_port}, isRunning_{false} {}
 
 Client::~Client()
 {
@@ -45,6 +45,7 @@ int Client::Main()
     perror("connect");
     return -1;
   }
+  isRunning_ = true;
 
   while (isRunning_)
   {
