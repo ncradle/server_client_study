@@ -17,7 +17,7 @@ public:
   Client(uint16_t server_port);
   ~Client();
   int Init();
-  int Main();
+  int Recv();
   void Stop();
   void Send(const char *msg, size_t size);
 

@@ -27,7 +27,7 @@ int Client::Init()
   return 0;
 }
 
-int Client::Main()
+int Client::Recv()
 {
   // 2:connect
   // connect server socket
@@ -77,7 +77,6 @@ int Client::Main()
 
 void Client::Send(const char *msg, const size_t size)
 {
-  // write
   size_t offset = 0;
   while (offset < size)
   {

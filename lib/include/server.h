@@ -16,7 +16,7 @@ public:
   Server(uint16_t server_port);
   ~Server();
   int Init();
-  int Main();
+  int Recv();
   void Stop();
   void Send(const char *msg, size_t size);
 

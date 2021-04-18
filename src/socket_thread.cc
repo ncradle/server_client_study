@@ -9,8 +9,8 @@ int main()
   Client client(SERVER_PORT);
   server.Init();
   client.Init();
-  std::thread th0([&server] { server.Main(); });
-  std::thread th1([&client] { client.Main(); });
+  std::thread th0([&server] { server.Recv(); });
+  std::thread th1([&client] { client.Recv(); });
 
   std::this_thread::sleep_for(std::chrono::microseconds(1000));
 

@@ -71,7 +71,7 @@ int Server::Init()
   return 0;
 }
 
-int Server::Main()
+int Server::Recv()
 { // 4:accept
   struct sockaddr_in client_addr;
   socklen_t len = sizeof(client_addr);
@@ -114,7 +114,6 @@ int Server::Main()
 
 void Server::Send(const char *msg, const size_t size)
 {
-  // write
   size_t offset = 0;
   while (offset < size)
   {
