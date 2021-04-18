@@ -29,6 +29,7 @@ int Client::Init()
 
 int Client::Recv()
 {
+  int err = 0;
   // 2:connect
   // connect server socket
   // sin_family      = AF_INET              : ipv4
@@ -38,7 +39,7 @@ int Client::Recv()
   server_addr.sin_family = AF_INET;
   server_addr.sin_addr.s_addr = inet_addr(LOACLHOST);
   server_addr.sin_port = htons(server_port_);
-  int err = 0;
+
   err = connect(client_socket_, reinterpret_cast<struct sockaddr *>(&server_addr), sizeof(server_addr));
   if (err < 0)
   {
@@ -50,9 +51,9 @@ int Client::Recv()
   while (isRunning_)
   {
     // read
-    char buf[10] = {};
+    char buf[MAX_RECV_BUF_SIZE] = {};
     int read_num = 0;
-    read_num = read(client_socket_, buf, 10);
+    read_num = read(client_socket_, buf, MAX_RECV_BUF_SIZE);
     if (read_num == 0)
     {
       std::cout << "connection end" << std::endl;
@@ -62,7 +63,7 @@ int Client::Recv()
     {
       perror("read");
     }
-    std::cout << buf << std::endl;
+    std::cout << "client " << buf << std::endl;
   }
 
   err = close(client_socket_);

@@ -72,32 +72,48 @@ int Server::Init()
 }
 
 int Server::Recv()
-{ // 4:accept
-  struct sockaddr_in client_addr;
-  socklen_t len = sizeof(client_addr);
-  client_socket_ = accept(server_socket_, reinterpret_cast<struct sockaddr *>(&client_addr), &len);
-  if (client_socket_ < 0)
-  {
-    perror("accept");
-    return -1;
-  }
+{
   isRunning_ = true;
-
+  int err = 0;
   while (isRunning_)
   {
-    // write
-    int write_num = 0;
-    Send("123456", 6);
-  }
+    // 4:accept
+    struct sockaddr_in client_addr;
+    socklen_t len = sizeof(client_addr);
+    client_socket_ = accept(server_socket_, reinterpret_cast<struct sockaddr *>(&client_addr), &len);
+    if (client_socket_ < 0)
+    {
+      perror("accept");
+      return -1;
+    }
 
-  int err;
-  // close client connection
-  err = close(client_socket_);
-  client_socket_ = INVALID_SOCKET;
-  if (err < 0)
-  {
-    perror("close client");
-    return -1;
+
+    while (isRunning_)
+    { // read
+      char buf[MAX_RECV_BUF_SIZE] = {};
+      int read_num = 0;
+      read_num = read(client_socket_, buf, MAX_RECV_BUF_SIZE);
+      if (read_num == 0)
+      {
+        std::cout << "connection end" << std::endl;
+        break;
+      }
+      if (read_num < 0)
+      {
+        perror("read");
+      }
+      std::cout << "server " << buf << std::endl;
+    }
+
+    int err;
+    // close client connection
+    err = close(client_socket_);
+    client_socket_ = INVALID_SOCKET;
+    if (err < 0)
+    {
+      perror("close client");
+      return -1;
+    }
   }
 
   // close listen

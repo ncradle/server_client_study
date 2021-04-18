@@ -11,8 +11,14 @@ int main()
   client.Init();
   std::thread th0([&server] { server.Recv(); });
   std::thread th1([&client] { client.Recv(); });
-
   std::this_thread::sleep_for(std::chrono::microseconds(1000));
+  server.Send("1", 1);
+  std::this_thread::sleep_for(std::chrono::microseconds(1000));
+  client.Send("2", 1);
+  std::this_thread::sleep_for(std::chrono::microseconds(1000));
+  server.Send("123", 3);
+  std::this_thread::sleep_for(std::chrono::microseconds(1000));
+  client.Send("123", 3);
 
   server.Stop();
   client.Stop();
