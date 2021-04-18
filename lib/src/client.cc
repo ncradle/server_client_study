@@ -1,8 +1,14 @@
 #include "client.h"
 
-Client::Client(uint16_t server_port) : client_socket_{0}, server_port_{server_port}, isRunning_{true} {}
+Client::Client(uint16_t server_port) : client_socket_{INVALID_SOCKET}, server_port_{server_port}, isRunning_{true} {}
 
-Client::~Client() {}
+Client::~Client()
+{
+  if (client_socket_)
+  {
+    close(client_socket_);
+  }
+}
 
 int Client::Init()
 {
@@ -54,6 +60,7 @@ int Client::Main()
   }
 
   err = close(client_socket_);
+  client_socket_ = INVALID_SOCKET;
   if (err < 0)
   {
     perror("close client");

@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include "socket_common.h"
 
 const int MAX_CLIENT = 5; // client queue for
 

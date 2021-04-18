@@ -1,8 +1,18 @@
 #include "server.h"
 
-Server::Server(uint16_t server_port) : server_socket_{0}, server_port_{server_port}, client_socket_{0}, isRunning_{true} {}
+Server::Server(uint16_t server_port) : server_socket_{INVALID_SOCKET}, server_port_{server_port}, client_socket_{INVALID_SOCKET}, isRunning_{true} {}
 
-Server::~Server() {}
+Server::~Server()
+{
+  if (client_socket_)
+  {
+    close(client_socket_);
+  }
+  if (server_socket_)
+  {
+    close(server_socket_);
+  }
+}
 
 int Server::Init()
 { // 1:socket
@@ -87,6 +97,7 @@ int Server::Main()
   int err;
   // close client connection
   err = close(client_socket_);
+  client_socket_ = INVALID_SOCKET;
   if (err < 0)
   {
     perror("close client");
@@ -95,6 +106,7 @@ int Server::Main()
 
   // close listen
   err = close(server_socket_);
+  server_socket_ = INVALID_SOCKET;
   if (err < 0)
   {
     perror("close server");

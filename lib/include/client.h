@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include "socket_common.h"
 
 const char LOACLHOST[] = "127.0.0.1"; // local connection
 
