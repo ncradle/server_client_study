@@ -52,6 +52,11 @@ int Client::Main()
     char buf[10] = {};
     int read_num = 0;
     read_num = read(client_socket_, buf, 10);
+    if (read_num == 0)
+    {
+      std::cout << "connection end" << std::endl;
+      break;
+    }
     if (read_num < 0)
     {
       perror("read");
